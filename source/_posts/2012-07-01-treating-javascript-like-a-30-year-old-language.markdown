@@ -85,4 +85,20 @@ Now, you by no means have to get this detailed with every function that you writ
 
 ## The `new` keyword
 
+All of the cool kids seem to really hate the `new` JavaScript keyword.  Apparently it's totally old school and not at all trendy, so therefore you shouldn't use it.  Dmitry Baranovskiy seems to have a [particular distaste](http://dmitry.baranovskiy.com/post/something-new) for it.
+
+Well, I really like the `new` keyword.  When I see `new` in code, I read it as "make a new instance of the following."  Here's an example of why I really like this clarity:
+
+```javascript
+var kitty = Cat();
+```
+
+This is simple enough, but`kitty` could be anything. `Cat` could be giving us a `number`, for all we know.  I prefer this:
+
+```javascript
+var kitty = new Cat();
+```
+
+You may prefer to just capitalize your constructors, but I feel that using `new`  helps to clearly communicate what a line of code is doing.
+
 ## Compile-time defines
