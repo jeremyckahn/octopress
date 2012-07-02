@@ -102,3 +102,50 @@ var kitty = new Cat();
 You may prefer to just capitalize your constructors, but I feel that using `new`  helps to clearly communicate what a line of code is doing.
 
 ## Compile-time defines
+
+Compilers are totally awesome.  Generally speaking, you shouldn't deploy production code unless it's been compiled with tools such as the [Google Closure Compiler](https://developers.google.com/closure/compiler/) or [UglifyJS](https://github.com/mishoo/UglifyJS).  For my open source projects, I prefer UglifyJS.  I actually get better compression with Closure Compiler, but UglifyJS is easier to develop with.  UglifyJS also has a few really awesome features.  One that I've fallen in love with is code pre-processing with [compile-time defines](https://github.com/mishoo/UglifyJS#use-as-a-code-pre-processor).  This feature is a throwback from the C world, and probably other compiled languages that older than I.  In any case, using defines lets you tailor your compiled binaries to fulfill various requirements.  For example, you can use defines to tailor a build for mobile platforms that need different code than desktop platforms.
+
+I'm using defines for [Rekapi](https://github.com/rekapi)'s testing hooks.  There are some methods that I want to expose for my unit tests, but I don't want to expose them in the compiled code that gets sent to users.  It's just wasted bandwidth and CPU cycles to parse it.  Here's how I set it up:
+
+```javascript
+// At the beginning of the library
+if (typeof KAPI_DEBUG === 'undefined') {                                                                                                                                     
+  var KAPI_DEBUG = true;                                                                                                                                                     
+}
+```
+
+```javascript
+// Later on in the code
+if (KAPI_DEBUG) {                                                                                                                                                          
+  Kapi._private = {                                                                                                                                                        
+    'calculateLoopPosition': calculateLoopPosition                                                                                                                         
+    ,'updateToCurrentMillisecond': updateToCurrentMillisecond                                                                                                              
+    ,'tick': tick                                                                                                                                                          
+    ,'determineCurrentLoopIteration': determineCurrentLoopIteration                                                                                                        
+    ,'calculateTimeSinceStart': calculateTimeSinceStart                                                                                                                    
+    ,'isAnimationComplete': isAnimationComplete                                                                                                                            
+    ,'updatePlayState': updatePlayState                                                                                                                                    
+  };                                                                                                                                                                       
+}
+```
+
+`Kapi._private` has references to a bunch of methods that will never be used publicly, but need to be exposed for testing.  `KAPI_DEBUG` is a global variable (eeek!), but is only present in the source code, not the compiled binary.  This is thanks to my [build.js](https://github.com/jeremyckahn/rekapi/blob/master/build.js) script:
+
+```javascript
+var uglifyJS = require('uglify-js');
+var jsp = uglifyJS.parser;
+var pro = uglifyJS.uglify;
+var ast = jsp.parse( _fs.readFileSync(_distFileName, 'utf-8') );
+
+ast = pro.ast_mangle(ast, { 
+    'defines': {
+      KAPI_DEBUG: ['name', false ]
+    }
+  });
+```
+
+This tells UglifyJS to set `KAPI_DEBUG` to `false` when it is compiled.  Because my debugging code is wrapped in conditional that tests the boolean value of `KAPI_DEBUG`, it is marked as unreachable code and not included in the binary.  Perfect!
+
+Something to note: At the time of this writing, this feature is poorly documented, but a [Pull Request is pending](https://github.com/mishoo/UglifyJS/pull/343).
+
+## I code like an old man
