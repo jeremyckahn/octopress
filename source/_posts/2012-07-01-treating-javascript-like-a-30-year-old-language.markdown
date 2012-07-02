@@ -33,7 +33,55 @@ var builtStyle = buildTransformValue(this._transformOrder,
 setTransformStyles(context, builtStyle);
 ```
 
+While I can add line breaks to the original one-liner to make it conform to the 80 character limit, the limit annoys me into breaking things up into shorter, more obvious statements.  I _want_ to be annoyed into this, it makes my code more readable in the long run.
+
 ## Strict-ish typing with annotations
+
+The Google Closure Compiler has [a lot of rules regarding code annotations](https://developers.google.com/closure/compiler/docs/js-for-compiler).  These are necessary to allow the compiler to perform all sorts of compile-time optimizations.  The annotations serve to clearly communicate to the compiler what the expected inputs and outputs of every function are.  If you are developing an app that takes advantage of the advanced Closure optimizations, you need to add these or the code won't compile properly.
+
+It turns out that taking the time to explicitly declare the input and output types of a function to communicate to the compiler have a nice side effect: The types are also explicitly communicated to humans!  Let's take an example of some magical code:
+
+```javascript
+function addNumbers (num1, num2) {
+  return num1 + num2;
+}
+```
+
+Simple enough, but what if we do this:
+
+```javascript
+var sum = addNumbers('5', 10);
+console.log(sum); // -> 510
+```
+
+Whoops.  If the client of this code assumes that `addNumbers` will do any typecasting for them, they will get unexpected results.  However, if we explicitly annotate the function, we leave very little open to interpretation:
+
+```javascript
+/**
+ * @param {number} num1
+ * @param {number} num2
+ * @return {number}
+ */
+function addNumbers (num1, num2) {
+  return num1 + num2;
+}
+```
+
+Much better.  Very clear, very explicit.  We can even take this a step further and add some documentation for the poor soul who has to read this code in the future:
+
+```javascript
+/**
+ * Adds two numbers.
+ * @param {number} num1 The first number to add.
+ * @param {number} num2 The second number to add.
+ * @return {number} The result of adding num1 and num2.
+ */
+function addNumbers (num1, num2) {
+  return num1 + num2;
+}
+```
+
+Now, you by no means have to get this detailed with every function that you write.  If a function is simple and obvious enough, I often just annotate the types and omit the documentation text.  Just be pragmatic about it.
 
 ## The `new` keyword
 
