@@ -93,7 +93,7 @@ Well, I really like the `new` keyword.  When I see `new` in code, I read it as "
 var kitty = Cat();
 ```
 
-This is simple enough, but`kitty` could be anything. `Cat` could be giving us a `number`, for all we know.  I prefer this:
+This is simple enough, but `kitty` could be anything. `Cat` could be giving us a `number`, for all we know.  I prefer this:
 
 ```javascript
 var kitty = new Cat();
@@ -109,23 +109,23 @@ I'm using defines for [Rekapi](https://github.com/jeremyckahn/rekapi)'s testing 
 
 ```javascript
 // At the beginning of the library
-if (typeof KAPI_DEBUG === 'undefined') {                                                                                                                                     
-  var KAPI_DEBUG = true;                                                                                                                                                     
+if (typeof KAPI_DEBUG === 'undefined') {
+  var KAPI_DEBUG = true;
 }
 ```
 
 ```javascript
 // Later on in the code
-if (KAPI_DEBUG) {                                                                                                                                                          
-  Kapi._private = {                                                                                                                                                        
-    'calculateLoopPosition': calculateLoopPosition                                                                                                                         
-    ,'updateToCurrentMillisecond': updateToCurrentMillisecond                                                                                                              
-    ,'tick': tick                                                                                                                                                          
-    ,'determineCurrentLoopIteration': determineCurrentLoopIteration                                                                                                        
-    ,'calculateTimeSinceStart': calculateTimeSinceStart                                                                                                                    
-    ,'isAnimationComplete': isAnimationComplete                                                                                                                            
-    ,'updatePlayState': updatePlayState                                                                                                                                    
-  };                                                                                                                                                                       
+if (KAPI_DEBUG) {
+  Kapi._private = {
+    'calculateLoopPosition': calculateLoopPosition
+    ,'updateToCurrentMillisecond': updateToCurrentMillisecond
+    ,'tick': tick
+    ,'determineCurrentLoopIteration': determineCurrentLoopIteration
+    ,'calculateTimeSinceStart': calculateTimeSinceStart
+    ,'isAnimationComplete': isAnimationComplete
+    ,'updatePlayState': updatePlayState
+  };
 }
 ```
 
@@ -137,7 +137,7 @@ var jsp = uglifyJS.parser;
 var pro = uglifyJS.uglify;
 var ast = jsp.parse( _fs.readFileSync(_distFileName, 'utf-8') );
 
-ast = pro.ast_mangle(ast, { 
+ast = pro.ast_mangle(ast, {
     'defines': {
       'KAPI_DEBUG': ['name', false ]
     }
