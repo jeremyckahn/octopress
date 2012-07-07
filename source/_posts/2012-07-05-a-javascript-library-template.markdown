@@ -32,6 +32,6 @@ lib-tmpl uses [UglifyJS](https://github.com/mishoo/UglifyJS/) as its build tool.
 
 ## Building better libraries
 
-I have [my opinions](http://jeremyckahn.github.com/blog/2012/07/01/treating-javascript-like-a-30-year-old-language/) when it comes to JavaScript style.  lib-tmpl is built on those opinions, but you are encouraged to ditch them and form your own if they don't suit you.  Regardless of the style you choose, lib-tmpl's structure and included toolset should go a long way to help you build awesome JavaScript libraries and minimize friction.
+I have [my opinions](/blog/2012/07/01/treating-javascript-like-a-30-year-old-language/) when it comes to JavaScript style.  lib-tmpl is built on those opinions, but you are encouraged to ditch them and form your own if they don't suit you.  Regardless of the style you choose, lib-tmpl's structure and included toolset should go a long way to help you build awesome JavaScript libraries and minimize friction.
 
 lib-tmpl lives [here](https://github.com/jeremyckahn/lib-tmpl) and is open source.  Please fork and expand on the template to your liking.
