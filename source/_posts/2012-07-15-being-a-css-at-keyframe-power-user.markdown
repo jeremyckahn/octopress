@@ -14,7 +14,49 @@ At first blush, animation doesn't seem like a "style" in the same sense that `bo
 
 ## All hail the GPU
 
+First off, why is CSS the de facto better tool for building animations?  Simply put, __CSS can take advantage of a computer's GPU__.  This is a game changer for performance and animation fidelity.  A JavaScript animation operates by invoking a callback function many times a second.  This isn't fundamentally wrong, but it introduces quite a bit of complexity to an app.  JavaScript is single threaded, so it can only do one thing at a time.  If the JavaScript is animating something, it's not responding to user input or network activity, and vice versa.
+
+That much is more or less common knowledge, but what isn't discussed as much is the Garbage Collector and its impact on performance.  Because JavaScript takes care of memory allocation, the Garbage Collector has to come along and clean up the mess that we've made from time to time.  In most applications, this is fine and not noticeable.  However, this is a huge problem for animations.  The Garbage Collector literally stops all JavaScript from running, including animation callback functions, so there is a distinctive stutter from time to time.  This is especially noticeable in animations with a high frame rate, because code is being run more frequently and the Garbage Collector runs accordingly.
+
+So, what to do about stuttering JavaScript bogging down our animations?  Sidestep the problem entirely: Let's kick our animations over to the GPU and free up the JavaScript thread and Garbage Collector.  With CSS `@keyframes`, we can allocate our resources more efficiently and let the browser optimize our animations.
+
 ## The prefix problem
+
+One CSS rule isn't cool anymore.  You know what's cool?  A _billion_ CSS rules.  That's the current state of affairs with CSS3, anyways.  This problem extends to `@keyframes`:
+
+```css
+.myAnimation {
+  -moz-animation-name: myAnimation;
+  -moz-animation-duration: 2000ms;
+  -moz-animation-delay: 0ms;
+  -moz-animation-fill-mode: forwards;
+  -moz-animation-timing-function: linear;
+  -ms-animation-name: myAnimation;
+  -ms-animation-duration: 2000ms;
+  -ms-animation-delay: 0ms;
+  -ms-animation-fill-mode: forwards;
+  -ms-animation-timing-function: linear;
+  -o-animation-name: myAnimation;
+  -o-animation-duration: 2000ms;
+  -o-animation-delay: 0ms;
+  -o-animation-fill-mode: forwards;
+  -o-animation-timing-function: linear;
+  -webkit-animation-name: myAnimation;
+  -webkit-animation-duration: 2000ms;
+  -webkit-animation-delay: 0ms;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-timing-function: linear;
+  animation-name: myAnimation;
+  animation-duration: 2000ms;
+  animation-delay: 0ms;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+```
+
+This is our reality.  We're actually expected to do this.  This is currently what is necessary to have our animations run in all modern browsers.
+
+Believe it or not, nobody really wants to write all this out.  Thankfully there are a [number](http://thecssguru.freeiz.com/animate/) of [tools](http://animationfillcode.com/) to ease the pain, but the current situation is innately broken.  Be kind to yourself, use these tools to automate this problem away.
 
 ## Multilayered easing
 
