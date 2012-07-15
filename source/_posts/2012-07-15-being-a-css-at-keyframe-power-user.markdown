@@ -60,4 +60,29 @@ Believe it or not, nobody really wants to write all this out.  Thankfully there 
 
 ## Multilayered easing
 
+[Easing](http://matthewlein.com/ceaser/) formulae are a crucial component of any natural, organic looking animation.  A while back I discovered something kind of cool about easing formulae: If you animate different properties synchronously with different easing formulae, you can get some very natural and compelling motion.  Most animations that we see on the web use the same easing formula for X and Y, so things move in a straight line.  However, if we mix and match formulae — say, `easeFrom` for X and `easeTo` for Y — we get [fun curves](http://jeremyckahn.github.com/hackapi/squares.html), [accelerations](http://rekapi.com/demo/bubbles.html) and [decelerations](http://rekapi.com/demo/catimate.html).  I have written [Shifty](http://jeremyckahn.github.com/shifty/) and [Rekapi](http://rekapi.com/), JavaScript libraries that make it really easy to decouple animation properties from easing formulae.
+
+Combining easing formulae is just as important for CSS animations as it is for JavaScript.  Fortunately, the [`animation-timing-function`](https://developer.mozilla.org/en/CSS/animation-timing-function) property allows for this:
+
+```css
+.combined-formulae {
+  position: absolute;
+  -webkit-animation-name: top-property-animation, left-property-animation;
+  -webkit-animation-timing-function: linear, cubic-bezier(.895,.03,.685,.22);
+  -webkit-animation-duration: 2000ms;
+}
+
+@-webkit-keyframes top-property-animation {
+  0% { top: 0px; }
+  100% { top: 300px; }
+}
+
+@-webkit-keyframes left-property-animation {
+  0% { left: 0px; }
+  100% { left: 300px; }
+}
+```
+
+Definitely experiment with different easing formulae.  I've built [a little tool](http://rekapi.com/ease.html) to make this easier.
+
 ## Automation is awesome
