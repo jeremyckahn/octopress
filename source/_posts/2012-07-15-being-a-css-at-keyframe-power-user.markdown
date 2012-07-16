@@ -10,7 +10,7 @@ Animation on the web should be done with CSS and not JavaScript.
 
 JavaScript is powerful and versatile tool.  And that's good, because it's all web developers have to work with.  Especially [now](http://weblog.bocoup.com/javascript-arduino-programming-with-nodejs/) [that](https://github.com/charliesome/jsos/) [it's](https://github.com/grantgalitz/GameBoy-Online) [everywhere](http://nodejs.org/), we're really lucky that JavaScript is so flexible.  We live in kind of a strange reality where there's almost nothing that JavaScript _can't_ do that another language can.  However, it's kind of like a [multitool](http://www.multitool.org/) — it can do everything but it doesn't really excel at anything.  Certain situations call for specialized tools, and animation is one of those.
 
-At first blush, animation doesn't seem like a "style" in the same sense that `border-radius` is a style.  The taxonomy is a little broken, but so it goes with technology.  CSS3 affords us APIs and performance that will eventually let us bring the web to life with interfaces that would make [Minority Report](http://www.youtube.com/watch?v=NwVBzx0LMNQ) jealous.  This article discusses how to optimize for performance and eye-catching motion.
+At first blush, animation doesn't seem like a "style" in the same sense that `border-radius` is a style.  The taxonomy is a little broken, but so it goes with technology.  CSS 3 affords us APIs and performance that will eventually let us bring the web to life with interfaces that would make [Minority Report](http://www.youtube.com/watch?v=NwVBzx0LMNQ) jealous.  This article discusses how to optimize for performance and eye-catching motion.
 
 ## All hail the GPU
 
@@ -22,7 +22,7 @@ So, what to do about stuttering JavaScript bogging down our animations?  Sideste
 
 ## The prefix problem
 
-One CSS rule isn't cool anymore.  You know what's cool?  A _billion_ CSS rules.  That's the current state of affairs with CSS3, anyways.  This problem extends to `@keyframes`:
+One CSS rule isn't cool anymore.  You know what's cool?  A _billion_ CSS rules.  That's the current state of affairs with CSS 3, anyways.  This problem extends to `@keyframes`:
 
 ```css
 .myAnimation {
@@ -83,6 +83,16 @@ Combining easing formulae is just as important for CSS animations as it is for J
 }
 ```
 
-Definitely experiment with different easing formulae.  I've built [a little tool](http://rekapi.com/ease.html) to make this easier.
+Definitely experiment with different easing formulae combinations.  I've built [a little tool](http://rekapi.com/ease.html) to make this easier.
 
 ## Automation is awesome
+
+Getting an animation to look _just right_ involves a lot of iteration and tweaking.  CSS is absolutely not conducive to this.  Neither Chrome Dev Tools nor Firebug currently allow you to easily modify `@keyframes` dynamically, so we are mostly left to change the source code and reload for every minor change.  This problem is exacerbated by the vendor prefix problem that was discussed previously.  There is a lot of boilerplate in CSS animations, and we shouldn't have to deal with any of that when designing an animation.
+
+I think it is critically important to have powerful, high-level tools for this sort of thing.  Animations should be made graphically, not programmatically.  There are a [number](http://www.sencha.com/products/animator/) of [tools](http://labs.adobe.com/technologies/edge/) being [developed](https://github.com/Motorola-Mobility/ninja) that do exactly this, and this is totally awesome.  We are essentially rebuilding in HTML 5 what the Flash world has enjoyed for over a decade with their authoring environment.
+
+I think there needs to be good open source tools for this as well, which is why am developing [Stylie](http://jeremyckahn.github.com/stylie/).  Stylie is an app that makes creating CSS 3 `@keyframes` animations a drag-and-drop task.  It uses Rekapi to generate optimized, cross-browser CSS that you can copy and paste into your stylesheets.
+
+## Choose the best approaches
+
+The tools you choose to generate animations are largely irrelevant.  Use whatever tool makes you most efficient, be it open or closed, free or paid.  What matters is that you solve a problem with the correct strategy.  In the case of web animation, CSS is often a better approach than JavaScript because of GPU performance optimization and the lack of Garbage Collector pauses.  And, since actually writing an animation is such a slow and tedious task, let the computer do the work for you and iterate with a graphical tool.
