@@ -12,6 +12,8 @@ The same is true of my toolset.  I have come to really enjoy two libraries in pa
 
 That being said, knowing how to use Backbone and Require.js is a discipline.  Without a consistent pattern to follow, even a small Backbone app can grow unmanageable and hard to build upon.  The patterns I'll discuss here are designed to grow with your app and make your life easier.
 
+I have built a sample project that puts the patterns I'll discuss into use.  You can find the code [here](https://github.com/jeremyckahn/require-and-backbone-views).
+
 
 ## Keeping it real small
 
@@ -24,16 +26,16 @@ While breaking up code across many files will result in a more complex directory
 
 You don't need terribly much Require.js code to glue your app together.  Require.js's only footprint in your project should be the `require` or `define` function call that wraps the contents of each file:
 
-````javascript
+```javascript
 // A View module.  Use the view.viewName.js file naming convention.
 define(['exports'], function (exportedObject) {
   exportedObject.View = Backbone.View.extend({});
 });
-````
+```
 
 It helps to put all of your View files in a directory called `view`.  The rest of this tutorial assumes this convention.  In addition to multiple View files, I like to have a single `init.js` file that serves as the entry point for an app.  Place this somewhere higher up your directory structure, because there should only be one of these and it should be differentiated from other files.
 
-````javascript
+```javascript
 // init.js
 require(['view/button', 'view/slider'], function (button, slider) {
   // App initialization code goes here.  When this code runs, we can assume that 
@@ -41,12 +43,101 @@ require(['view/button', 'view/slider'], function (button, slider) {
   // and ready to use as `button` and `slider`.
   var buttonView = new button.View();
 });
-````
+```
 
 
 ## Backbone boilerplating
 
-Some amount of boilerplate code is needed to build out a Backbone View, but luckily we don't need that much.
+Some amount of boilerplate code is needed to build out a Backbone View, but luckily we don't need that much.  The pattern I use for Backbone Views more or less echoes that [pattern that I use for writing from-scratch JavaScript libraries](/blog/2012/07/05/a-javascript-library-template/), because it's flexible and lends itself to modularity and sane public/private APIs.  You can see a functional example of this pattern in the companion project I built for this tutorial, but the basic pattern is this:
+
+```javascript
+// A View module.  Use the view.viewName.js file naming convention.
+define(['exports'], function (exportedObject) {
+  
+  'use strict';
+  
+  // PRIVATE UTILITY FUNCTIONS
+  //
+  
+  function noop () {}
+  
+  // This is where we define the View.  Every property on this Object is 
+  // exposed publicly.
+  exportedObject.View = Backbone.View.extend({
+    
+    'events': {
+      'click': 'onClick'
+    }
+    
+    /**
+     * @param {Object} opts
+     */
+    ,'initialize': function (opts) {
+      
+    }
+    
+    /**
+     * @param {jQuery.Event} evt
+     */
+    ,'onClick': function (evt) { }
+  });
+});
+```
+
+There are a few things to keep in mind with this approach.  First, try to keep your View's public API as small as possible.  Expose only the methods that are needed to let your View do its job, as well as event handlers.  It is easier to work with a View that has a small interface, because it helps to abstract away the implementation.  Client code should never have to know about your View's implementation (that's called a "leaky abstraction").  If your View needs to do a complex computation, consider moving that logic into a helper function (inside of the area marked as `PRIVATE UTILITY FUNCTIONS`) that is called from a public method:
+
+```javascript
+define(['exports'], function (exportedObject) {
+  
+  // PRIVATE UTILITY FUNCTIONS
+  //
+  
+  function longComplexCalculationImplementation () {
+    // Implementation code goes here
+  }
+  
+  exportedObject.View = Backbone.View.extend({
+    
+    // Remember, this is a public API.
+    'performLongComplexCalculation': function () {
+      longComplexCalculationImplementation();
+    }
+  });
+});
+```
+
+The point of this is to move as much implementation code out of the View as possible.  A View should be a lightweight organizational tool - use it for wiring up events to logic and building out APIs.  This helps to isolate complexity into discrete components.
+
+Another thing to keep in mind with this pattern is the organization of your View's methods.  Try to group them by their purpose.  The order of the groups is up to you, but I prefer to go with something like this:
+
+  1. `events` map
+  2. `initialize`
+  3. Event handlers
+  4. Non-event handler public APIs
+
+Here's an example:
+
+```javascript
+Backbone.View.extend({
+    
+  'events': {
+    'click': 'onClick'
+    ,'click button': 'onButtonClick'
+  }
+  
+  ,'initialize': function () {}
+  
+  ,'onClick': function () {}
+  
+  ,'onButtonClick': function () {}
+  
+  ,'aPublicMethod': function () {}
+  
+  ,'anotherPublicMethod': function () {}
+});
+```
+
+The goal is to build towards a consistent View organization.
 
 
 ## Narrow Views
