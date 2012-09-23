@@ -36,6 +36,6 @@ At least in my experience, computer scientists aren't the best builders.  While 
 The skill set of a scientist has a lot of overlap with that of an engineer.  I would argue that these groups are differentiated by a focus on theory versus implementation.  Scientists focus on theory, and engineers focus on actual implementations.  The programmer with a good mix of science and engineering is a true phenom and an invaluable asset.
 
 
-# It takes all kinds
+## It takes all kinds
 
 A truly effective team consists of all three of these types of programmers.  A good baseball team leverages the strengths of each of its players, and development team is no different.  For my own part, I find myself most comfortable near the "engineer" range of the programmer spectrum, but I often venture into the "developer" range for various tasks.  I identify myself as a "scientist" less often, but it becomes necessary from time to time.  The point is, programmers flit all around the spectrum, but tend to gravitate towards one range more than others.  Balance your team according to what you want to build.
