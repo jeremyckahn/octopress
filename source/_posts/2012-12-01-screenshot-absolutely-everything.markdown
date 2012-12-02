@@ -10,7 +10,7 @@ One of the best things about being a programmer is using powerful tools to solve
 
 ## Confirming the problem
 
-Consider this bug request:
+Consider this bug description:
 
 ```
   1. Go to http://rekapi.com/ease.html
