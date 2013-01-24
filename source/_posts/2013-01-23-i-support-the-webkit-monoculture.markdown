@@ -34,7 +34,7 @@ WebKit has a lot to offer Web Developers.  Safari's built-in developer tools are
 
 Just as focusing on a single rendering engine allows us to spend more time writing cutting edge features for our apps, it also allows us to build more robust tools.  Software fragmentation is bad, and it's one of the biggest things holding the Web back right now.
 
-## More wood behind fewer arrows
+## Stronger focus on fewer engines
 
 WebKit is not the only open source rendering engine.  The big competitor is [Gecko](https://developer.mozilla.org/en-US/docs/Mozilla/Gecko), Mozilla's rendering engine that is used in Firefox.  Gecko was instrumental in wresting the Web from Microsoft's grasp, but it is past its prime.  Now Gecko is old, buggy and slow - at least in comparison to WebKit.  Imagine if all of the Gecko developers left and joined forces with WebKit?  Both projects are (imperfectly) trying to adhere to W3C standards, so fragmentation due to inconsistencies would diminish significantly.  Imagine if Firefox switched to WebKit - it would free up a ton of time spent fixing Firefox bugs.  Don't get me wrong, a world without browser-specific bugs is a pipe dream.  But standardizing on a single _rendering engine_ would go a long way towards unifying the web.
 
