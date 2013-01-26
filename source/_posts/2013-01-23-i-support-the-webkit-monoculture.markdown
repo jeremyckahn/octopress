@@ -10,7 +10,7 @@ _Full disclosure: I work for YouTube, which is owned by Google._
 
 _Disclaimer: This post, as well as all posts on this blog, reflect my opinions and not those of my employer._
 
-Counter to the opinion of the [Web Development literati](http://www.zeldman.com/2012/02/14/a-list-apart-no-344-the-new-webkit-monoculture/), I support a WebKit monoculture.  I'll put this in no uncertain terms:  I think the web would be better off if WebKit was the only rendering engine.  The common arguments against this are that it's bad for competition and that ["it's IE6 all over again"](http://news.cnet.com/8301-30685_3-57373764-264/w3c-co-chair-apple-google-power-causing-open-web-crisis/).  I feel that the former argument is invalid, and the latter is a false dichotomy.
+Counter to the opinion of the [Web Development literati](http://www.zeldman.com/2012/02/14/a-list-apart-no-344-the-new-webkit-monoculture/), I support a WebKit monoculture.  I'll put this in no uncertain terms:  I think the web would be better off if WebKit was the only rendering engine.  The common arguments against this are that it's bad for competition and that ["it's IE6 all over again."](http://news.cnet.com/8301-30685_3-57373764-264/w3c-co-chair-apple-google-power-causing-open-web-crisis/)  I feel that the former argument is invalid, and the latter is a false dichotomy.
 
 ## WebKit is open source
 
